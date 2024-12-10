@@ -40,6 +40,7 @@ export function app(): express.Express {
     if(!query || query == "") {
       res.status(500).send('missing query parameter');
     }
+    console.log(query);
     const text = await helloWorld(query);
     res.status(200).send(text);
   })

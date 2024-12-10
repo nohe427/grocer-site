@@ -13,6 +13,7 @@ export const helloWorld = ai.defineFlow(
     outputSchema: z.string(),
   },
   async (request) => {
+    console.log(request);
     const llmResponse = await ai.generate({
       prompt: `
         You are an AI designed to respond to the following text with a markdown response:
@@ -22,6 +23,7 @@ export const helloWorld = ai.defineFlow(
         temperature: 1
       }
     });
+    console.log(llmResponse);
     return llmResponse.text;
   }
 )
