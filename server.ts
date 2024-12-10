@@ -21,13 +21,13 @@ export function app(): express.Express {
 
   // Example Express Rest API endpoints
   server.use(bodyParser.json())
-  server.post('/api/**', async (req, res) => {
-    console.log(req.body);
-    res.send('hi mom');
-  });
+  // server.post('/api/**', async (req, res) => {
+  //   console.log(req.body);
+  //   res.send('hi mom');
+  // });
   server.post('/api/grocerAgent', async (req, res) => {
     console.log(req.body);
-    const query = req.body.query;
+    const query = req.body.text;
     if(!query || query == "") {
       res.status(500).send('missing query parameter');
     }
@@ -36,7 +36,7 @@ export function app(): express.Express {
   });
   server.post('/api/helloWorld', async (req, res) => {
     console.log(req.body);
-    const query = req.body.query;
+    const query = req.body.text;
     if(!query || query == "") {
       res.status(500).send('missing query parameter');
     }
