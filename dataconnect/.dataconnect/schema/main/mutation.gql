@@ -1,0 +1,34 @@
+extend type Mutation {
+  """
+  Insert a single StoreItem into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  storeItem_insert(data: StoreItem_Data!): StoreItem_Key! @fdc_generated(from: "StoreItem", purpose: INSERT_SINGLE)
+  """
+  Insert StoreItem entries into the table. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  storeItem_insertMany(data: [StoreItem_Data!]!): [StoreItem_Key!]! @fdc_generated(from: "StoreItem", purpose: INSERT_MULTIPLE)
+  """
+  Insert or update a single StoreItem into the table, based on the primary key. Returns the key of the newly inserted StoreItem.
+  """
+  storeItem_upsert(data: StoreItem_Data!): StoreItem_Key! @fdc_generated(from: "StoreItem", purpose: UPSERT_SINGLE)
+  """
+  Insert or update StoreItem entries into the table, based on the primary key. Returns the key of the newly inserted StoreItem.
+  """
+  storeItem_upsertMany(data: [StoreItem_Data!]): [StoreItem_Key!]! @fdc_generated(from: "StoreItem", purpose: UPSERT_MULTIPLE)
+  """
+  Update a single StoreItem based on `id` or `key`, setting columns specified in `data`. Returns `null` if not found.
+  """
+  storeItem_update(key: StoreItem_Key, data: StoreItem_Data!): StoreItem_Key @fdc_generated(from: "StoreItem", purpose: UPDATE_SINGLE)
+  """
+  Update StoreItem entries matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  storeItem_updateMany(where: StoreItem_Filter, all: Boolean = false, data: StoreItem_Data!): Int! @fdc_generated(from: "StoreItem", purpose: UPDATE_MULTIPLE)
+  """
+  Delete a single StoreItem based on `id` or `key` and return its key (or `null` if not found).
+  """
+  storeItem_delete(key: StoreItem_Key): StoreItem_Key @fdc_generated(from: "StoreItem", purpose: DELETE_SINGLE)
+  """
+  Delete StoreItem entries matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  storeItem_deleteMany(where: StoreItem_Filter, all: Boolean = false): Int! @fdc_generated(from: "StoreItem", purpose: DELETE_MULTIPLE)
+}

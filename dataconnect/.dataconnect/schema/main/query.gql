@@ -1,0 +1,15 @@
+extend type Query {
+  """
+  Look up a single StoreItem based on `id` or `key` and return selected fields (or `null` if not found).
+  """
+  storeItem(key: StoreItem_Key): StoreItem @fdc_generated(from: "StoreItem", purpose: QUERY_SINGLE)
+  """
+  List StoreItem entries in the table, optionally filtered by `where` conditions.
+  """
+  storeItems(where: StoreItem_Filter, orderBy: [StoreItem_Order!], offset: Int, limit: Int = 100): [StoreItem!]! @fdc_generated(from: "StoreItem", purpose: QUERY_MULTIPLE)
+  """
+  List StoreItem entries ordered by vector similarity between the `descEmbedding` field and `compare_embed`.
+  (Alternatively, `compare` can be used if the input is a raw Vector.)
+  """
+  storeItems_descEmbedding_similarity(compare: Vector, compare_embed: Vector_Embed, method: VectorSimilarityMethod = INNER_PRODUCT, within: Float, where: StoreItem_Filter, limit: Int = 100): [StoreItem!]! @fdc_generated(from: "StoreItem.descEmbedding", purpose: QUERY_MULTIPLE_BY_SIMILARITY)
+}

@@ -1,0 +1,27 @@
+# Uncomment to create more store items
+
+# mutation CreateStoreItem(
+#   $ref: String!
+#   $name: String!
+#   $aisle: Int!
+#   $category: String!
+#   $msrp: Float!
+#   $descEmbedding: Vector!
+# ) @auth(level: PUBLIC) {
+#   storeItem_insert(
+#     data: {
+#       ref: $ref
+#       name: $name
+#       aisle: $aisle
+#       category: $category
+#       msrp: $msrp
+#       descEmbedding: $descEmbedding
+#     }
+#   )
+# }
+mutation ChangeAisle($ref: String!, $newAisle: Int!) @auth(level: NO_ACCESS) {
+  storeItem_update(
+    key: {ref: $ref},
+    data: {aisle: $newAisle}
+  )
+}
