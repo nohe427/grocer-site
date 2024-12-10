@@ -118,6 +118,6 @@ export const customerAgent = ai.defineFlow(
 // must come last, after all of your plug-in configuration and flow definitions.
 // You can optionally specify a subset of flows to serve, and configure some
 // HTTP server options, but by default, the flow server serves all defined flows.
-ai.startFlowServer({
-  flows: [customerAgent],
-});
+// ai.startFlowServer({
+//   flows: [customerAgent],
+// });
