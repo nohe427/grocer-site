@@ -1,11 +1,11 @@
 specVersion: "v1alpha"
-serviceId: "local"
+serviceId: "lon"
 location: "us-central1"
 schema:
   source: "./schema"
   datasource:
     postgresql:
-      database: "dataconnect"
+      database: "postgres"
       cloudSql:
-        instanceId: "lon-next"
+        instanceId: "cloudsql"
 connectorDirs: ["./connector"]

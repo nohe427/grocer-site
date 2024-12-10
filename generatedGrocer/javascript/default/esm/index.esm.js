@@ -2,7 +2,7 @@ import { getDataConnect, queryRef, executeQuery, mutationRef, executeMutation, v
 
 export const connectorConfig = {
   connector: 'default',
-  service: 'local',
+  service: 'lon',
   location: 'us-central1'
 };
 

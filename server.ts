@@ -4,6 +4,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import { customerAgent, helloWorld } from './src/server/main';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -21,6 +22,22 @@ export function app(): express.Express {
   server.get('/api/**', (req, res) => {
     res.send('hi mom');
   });
+  server.post('/api/grocerAgent', async (req, res) => {
+    const query = req.body.query;
+    if(!query || query == "") {
+      res.status(500).send('missing query parameter');
+    }
+    const text = await customerAgent(query)
+    res.send(text);
+  });
+  server.post('/api/helloWorld', async (req, res) => {
+    const query = req.body.query;
+    if(!query || query == "") {
+      res.status(500).send('missing query parameter');
+    }
+    const text = await helloWorld(query);
+    res.status(200).send(text);
+  })
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
