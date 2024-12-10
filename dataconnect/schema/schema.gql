@@ -1,0 +1,8 @@
+type StoreItem @table(key: "ref") {
+  ref: String!
+  name: String!
+  aisle: Int!
+  category: String!
+  msrp: Float!
+  descEmbedding: Vector! @col(size: 768)
+}

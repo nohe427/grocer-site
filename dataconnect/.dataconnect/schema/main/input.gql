@@ -1,0 +1,36 @@
+scalar StoreItem_Key
+input StoreItem_Data {
+  ref: String
+  ref_expr: String_Expr
+  aisle: Int
+  category: String
+  category_expr: String_Expr
+  descEmbedding: Vector
+  descEmbedding_embed: Vector_Embed
+  msrp: Float
+  name: String
+  name_expr: String_Expr
+}
+input StoreItem_Filter {
+  _and: [StoreItem_Filter!]
+  _not: StoreItem_Filter
+  _or: [StoreItem_Filter!]
+  ref: String_Filter
+  aisle: Int_Filter
+  category: String_Filter
+  descEmbedding: Vector_Filter
+  msrp: Float_Filter
+  name: String_Filter
+}
+input StoreItem_ListFilter {
+  count: Int_Filter = {gt:0}
+  exist: StoreItem_Filter
+}
+input StoreItem_Order {
+  ref: OrderDirection
+  aisle: OrderDirection
+  category: OrderDirection
+  descEmbedding: OrderDirection
+  msrp: OrderDirection
+  name: OrderDirection
+}

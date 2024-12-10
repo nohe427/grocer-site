@@ -1,0 +1,14 @@
+query ListStoreItems($query: String!) @auth(level: PUBLIC) {
+  storeItems_descEmbedding_similarity(
+    compare_embed: { model: "textembedding-gecko@003", text: $query }
+    method: L2
+    within: 2
+    limit: 5
+  ) {
+    ref
+    name
+    aisle
+    category
+    msrp
+  }
+}

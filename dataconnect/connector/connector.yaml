@@ -1,0 +1,6 @@
+connectorId: default
+authMode: PUBLIC
+generate:
+  javascriptSdk:
+    outputDir: ../../generatedGrocer/javascript/default
+    package: "@grocer/dc"
