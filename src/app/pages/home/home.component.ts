@@ -25,14 +25,14 @@ export class HomeComponent {
     const formData = new FormData();
 
     if (promptText.value) {
-      formData.append('promptText', promptText.value)
+      formData.append('query', promptText.value)
     }
 
     if (promptImage.value && promptImage.files?.length === 1) {
       formData.append('promptImage', promptImage.files[0])
     }
 
-    const response = await fetch('api/startFlow', {
+    const response = await fetch('api/helloWorld', {
       method: 'POST',
       body: formData
     })
