@@ -20,5 +20,25 @@ const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent,
   }
 })
 export class HomeComponent {
+  async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
+    event.preventDefault();
+    const formData = new FormData();
 
+    if (promptText.value) {
+      formData.append('promptText', promptText.value)
+    }
+
+    if (promptImage.value && promptImage.files?.length === 1) {
+      formData.append('promptImage', promptImage.files[0])
+    }
+
+    const response = await fetch('api/startFlow', {
+      method: 'POST',
+      body: formData
+    })
+
+    console.log(response.ok, response.body);
+    
+    console.log(promptImage.files, promptText.value, JSON.stringify(promptImage));
+  }
 }

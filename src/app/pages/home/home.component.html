@@ -1,5 +1,13 @@
 <h1 class="large-heading">Grocery Store Agent</h1>
-<app-image-input></app-image-input>
+<form>
+  <h2>What would you like to make?</h2>
+  <label for="image-picker">Photo: </label>
+  <input #recipeImage id="image-picker" type="file" accept="image/*">
+  <label for="recipe-description">Description: </label>
+  <textarea #recipePrompt id="recipe-description" type="textarea" formControlName="lastName"></textarea>
+  <button (click)="submitPrompt($event, recipeImage, recipePrompt)">Let's cook!</button>
+  </form>
+<!-- <app-image-input></app-image-input> -->
 <!-- <section class="features">
   <article class="card">
     <h2>Server Side Rendering (SSR)</h2>

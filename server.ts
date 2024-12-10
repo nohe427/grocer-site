@@ -19,6 +19,7 @@ export function app(): express.Express {
 
   // Example Express Rest API endpoints
   server.get('/api/**', (req, res) => {
+    console.log(JSON.stringify(req.body));
     res.send('hi mom');
   });
   // Serve static files from /browser
