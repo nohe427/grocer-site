@@ -23,6 +23,7 @@
     "@angular/ssr": "^17.3.3",
     "@genkit-ai/vertexai": "^0.9.7",
     "@grocer/dc": "file:generatedGrocer/javascript/default",
+    "body-parser": "^1.20.3",
     "express": "^4.21.2",
     "firebase": "^11.0.2",
     "genkit": "^0.9.7",

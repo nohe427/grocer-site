@@ -22,20 +22,32 @@ const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent,
 export class HomeComponent {
   async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
     event.preventDefault();
-    const formData = new FormData();
+    const prompt: {text?: string, image?: ArrayBuffer} = {};
 
     if (promptText.value) {
-      formData.append('query', promptText.value)
+      prompt.text = promptText.value;
     }
 
     if (promptImage.value && promptImage.files?.length === 1) {
-      formData.append('promptImage', promptImage.files[0])
+      const file = promptImage.files[0];
+      prompt.image = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          resolve(reader.result as ArrayBuffer);
+        };
+        reader.onerror = (err) => {
+          reject(err);
+        };
+      });
     }
 
     const response = await fetch('api/helloWorld', {
       method: 'POST',
-      body: formData
-    })
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(prompt)
+    });
 
     console.log(response.ok, response.body);
     

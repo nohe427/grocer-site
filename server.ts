@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 import { customerAgent, helloWorld } from './src/server/main';
+import bodyParser from 'body-parser';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -19,11 +20,13 @@ export function app(): express.Express {
   server.set('views', browserDistFolder);
 
   // Example Express Rest API endpoints
-  server.get('/api/**', (req, res) => {
-    console.log(JSON.stringify(req.body));
+  server.use(bodyParser.json())
+  server.post('/api/**', async (req, res) => {
+    console.log(req.body);
     res.send('hi mom');
   });
   server.post('/api/grocerAgent', async (req, res) => {
+    console.log(req.body);
     const query = req.body.query;
     if(!query || query == "") {
       res.status(500).send('missing query parameter');
@@ -32,6 +35,7 @@ export function app(): express.Express {
     res.send(text);
   });
   server.post('/api/helloWorld', async (req, res) => {
+    console.log(req.body);
     const query = req.body.query;
     if(!query || query == "") {
       res.status(500).send('missing query parameter');
