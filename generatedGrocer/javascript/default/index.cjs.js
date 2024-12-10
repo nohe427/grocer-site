@@ -2,7 +2,7 @@ const { getDataConnect, queryRef, executeQuery, mutationRef, executeMutation, va
 
 const connectorConfig = {
   connector: 'default',
-  service: 'local',
+  service: 'lon',
   location: 'us-central1'
 };
 exports.connectorConfig = connectorConfig;

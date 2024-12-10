@@ -6,6 +6,26 @@ import { z } from 'genkit';
 // several generative models. Here, we import Gemini 1.5 Flash.
 import {findStoreItems, generateRecipie, ingredientReplacement} from './tools/grocerTools'
 
+export const helloWorld = ai.defineFlow(
+  {
+    name: 'helloWorld',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (request) => {
+    const llmResponse = await ai.generate({
+      prompt: `
+        You are an AI designed to respond to the following text with a markdown response:
+        TEXT: ${request}
+      `,
+      config: {
+        temperature: 1
+      }
+    });
+    return llmResponse.text;
+  }
+)
+
 export const customerAgent = ai.defineFlow(
   {
     name: 'customerAgent',
