@@ -1,0 +1,10 @@
+<input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)">
+@if(selectedFile == '') {
+    <div>
+        <p>Upload an image</p>
+    </div>
+}
+@if(img) {
+    <br>
+    <img [src]="img">
+}
