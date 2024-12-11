@@ -20,36 +20,49 @@ const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent,
   }
 })
 export class HomeComponent {
+  result = "";
   async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
     event.preventDefault();
-    const prompt: {text?: string, image?: ArrayBuffer} = {};
+    // const prompt: {text?: string, image?: ArrayBuffer} = {};
+    const prompt: {data: string} = {data: ""};
 
     if (promptText.value) {
-      prompt.text = promptText.value;
+      prompt.data = promptText.value;
     }
 
-    if (promptImage.value && promptImage.files?.length === 1) {
-      const file = promptImage.files[0];
-      prompt.image = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+    // TODO: Use a bucket to upload an image somewhere. @jhuleatt Help?
+    // if (promptImage.value && promptImage.files?.length === 1) {
+    //   const file = promptImage.files[0];
+    //   prompt.image = await new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
 
-        reader.onload = () => {
-          resolve(reader.result as ArrayBuffer);
-        };
-        reader.onerror = (err) => {
-          reject(err);
-        };
-      });
-    }
+    //     reader.onload = () => {
+    //       resolve(reader.result as ArrayBuffer);
+    //     };
+    //     reader.onerror = (err) => {
+    //       reject(err);
+    //     };
+    //   });
+    // }
 
-    const response = await fetch('api/helloWorld', {
+    //TODO(@jhuleatt): We needed to use an off app hosting server. Can explain tomorrow.
+    const response = await fetch('https://genkit-inst-1039410413539.us-central1.run.app/customerAgent', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(prompt)
     });
 
-    console.log(response.ok, response.body);
+    // const response = await fetch('api/helloWorld', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify(prompt)
+    // });
+
+    const json = await response.json()
+    this.result = json['result'];
+
+    console.log(response.ok, json);
     
     console.log(promptImage.files, promptText.value, JSON.stringify(promptImage));
   }

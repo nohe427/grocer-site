@@ -24,6 +24,7 @@ export const helloWorld = ai.defineFlow(
       }
     });
     console.log(llmResponse);
+    console.log(llmResponse.text)
     return llmResponse.text;
   }
 )

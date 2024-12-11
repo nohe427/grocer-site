@@ -35,14 +35,15 @@ export function app(): express.Express {
     res.send(text);
   });
   server.post('/api/helloWorld', async (req, res) => {
-    console.log(req.body);
-    const query = req.body.text;
-    if(!query || query == "") {
-      res.status(500).send('missing query parameter');
-    }
-    console.log(query);
-    const text = await helloWorld(query);
-    res.status(200).send(text);
+      console.log(req.body);
+      const query = req.body.text;
+      if(!query || query == "") {
+        res.status(500).send('missing query parameter');
+      }
+      console.log(query);
+      const text = "hi mom";
+      console.log("OUT", text);
+      res.status(200).send(text);
   })
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
