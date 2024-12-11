@@ -60,12 +60,6 @@ export class HomeComponent {
       body: JSON.stringify(prompt)
     });
 
-    // const response = await fetch('api/helloWorld', {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify(prompt)
-    // });
-
     const json = await response.json();
     this.result = json['result'];
 
