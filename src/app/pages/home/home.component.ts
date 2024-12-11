@@ -28,14 +28,12 @@ export class HomeComponent {
   result = "";
   async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
     event.preventDefault();
-    // const prompt: {text?: string, image?: ArrayBuffer} = {};
     const prompt: {data: {text?:string, image?: string}} = {data: {text:"", image: ""}};
 
     if (promptText.value) {
       prompt.data.text = promptText.value.trim();
     }
 
-    // TODO: Use a bucket to upload an image somewhere. @jhuleatt Help?
     if (promptImage.value && promptImage.files?.length === 1) {
       const fileMimeType = promptImage.files[0].type
         // Upload to bucket
@@ -53,7 +51,6 @@ export class HomeComponent {
       prompt.data.image = uploadJson.downloadLocation;
     }
 
-    //TODO(@jhuleatt): We needed to use an off app hosting server. Can explain tomorrow.
     const response = await fetch('https://genkit-inst-1039410413539.us-central1.run.app/customerAgent', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
