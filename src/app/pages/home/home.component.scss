@@ -38,6 +38,7 @@
   background-color: var(--yellow-0);
   font-size: var(--font-size-3);
   resize: none;
+  height: 100%;
 }
 
 .result-area {
@@ -46,9 +47,8 @@
   grid-column-end: 6;
   grid-row-start: 3;
   grid-row-end: 6;
+  max-height: 100%;
   overflow: scroll;
-  // justify-content: space-around;
-  overflow-x: scroll;
   p {
     color: var(--gray-8);
     font-size: var(--font-size-4);
