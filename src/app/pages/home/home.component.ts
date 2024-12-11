@@ -6,7 +6,8 @@ import { GithubIconComponent } from '../../components/icons/github-icon.componen
 import { TwitterIconComponent } from '../../components/icons/twitter-icon.component';
 import { YouTubeIconComponent } from '../../components/icons/youtube-icon.component';
 import { ImageInputComponent } from '../../image-input/image-input.component';
-
+import { MarkdownModule } from 'ngx-markdown';
+import {NgClass} from '@angular/common';
 const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent, YouTubeIconComponent];
 
 interface UlDlJs {
@@ -17,7 +18,7 @@ interface UlDlJs {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent],
+  imports: [NgClass, MarkdownModule, RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   host: {
@@ -26,8 +27,14 @@ interface UlDlJs {
 })
 export class HomeComponent {
   result = "";
+  status = "";
+  buttonPrompt = `Let's cook!`
+
   async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
     event.preventDefault();
+    this.status = 'loading';
+    this.buttonPrompt = `Cooking...`;
+    
     const prompt: {data: {text?:string, image?: string}} = {data: {text:"", image: ""}};
 
     if (promptText.value) {
@@ -59,7 +66,8 @@ export class HomeComponent {
 
     const json = await response.json();
     this.result = json['result'];
-
+    this.status = '';
+    this.buttonPrompt = `Let's cook!`;
     console.log(response.ok, json);
     
     console.log(promptImage.files, promptText.value, JSON.stringify(promptImage));

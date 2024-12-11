@@ -1,17 +1,31 @@
-<h1 class="large-heading">Grocery Store Agent</h1>
-<form>
-  <h2>What would you like to make?</h2>
-  <label for="image-picker">Photo: </label>
-  <input #recipeImage id="image-picker" type="file" accept="image/*">
-  <label for="recipe-description">Description: </label>
-  <textarea #recipePrompt id="recipe-description" type="textarea" formControlName="lastName"></textarea>
-  <button (click)="submitPrompt($event, recipeImage, recipePrompt)">Let's cook!</button>
-  </form>
-  @if(result != "") {
-    <p>
-      {{result}}
-    </p>
+<div class="recipe-sheet">
+  <h1 class="recipe-sheet-header">Grocery store agent</h1>
+<form class="prompt-form">
+  <textarea #recipePrompt class="prompt" id="recipe-description" type="textarea" formControlName="prompt"></textarea>
+  <input #recipeImage class="image-picker" id="image-picker" type="file" accept="image/*">
+  <button #submitButton [disabled]="status === 'loading'" [ngClass]="status === 'loading' ? 'btn-submit btn-loading' : 'btn-submit'" (click)="submitPrompt($event, recipeImage, recipePrompt)">{{buttonPrompt}}</button>  
+</form>
+  <div class="result-area">
+  @if (status === "loading") {
+    <div class="loading-skeleton">
+      <div class="loading-skeleton-line" style="width: 50%"></div>
+      <div class="loading-skeleton-line" style="width: 30%"></div>
+      <div class="loading-skeleton-line" style="width: 30%"></div>
+      <div class="loading-skeleton-line" style="width: 30%"></div>
+      <div class="loading-skeleton-line" style="width: 50%"></div>
+      <div class="loading-skeleton-line" style="width: 70%"></div>
+      <div class="loading-skeleton-line" style="width: 60%"></div>
+      <div class="loading-skeleton-line" style="width: 50%"></div>
+      <div class="loading-skeleton-line" style="width: 60%"></div>
+      <div class="loading-skeleton-line" style="width: 20%"></div>
+    </div>
+  }@else if(result != "") {
+    <markdown class="genkit-response">{{result}}
+</markdown>
+  } @else {
+    <p>Submit a prompt to get started!</p>
   }
+</div>
 <!-- <app-image-input></app-image-input> -->
 <!-- <section class="features">
   <article class="card">
