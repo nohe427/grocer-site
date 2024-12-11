@@ -32,7 +32,7 @@ export class HomeComponent {
     const prompt: {data: {text?:string, image?: string}} = {data: {text:"", image: ""}};
 
     if (promptText.value) {
-      prompt.data.text = promptText.value;
+      prompt.data.text = promptText.value.trim();
     }
 
     // TODO: Use a bucket to upload an image somewhere. @jhuleatt Help?
