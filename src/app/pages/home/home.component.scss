@@ -1,14 +1,16 @@
 .inputs {
-    width: 500px;
-    height: 75vh;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
+  width: 500px;
+  height: 75vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  gap: var(--size-1);
 }
 
 .recipe-sheet {
-  height: 100vh;
-  max-width: 90vw;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -19,12 +21,19 @@
 }
 
 .recipe-sheet-header {
-  font-size: var(--font-size-6);
   color: var(--firebase-gray-95);
   text-wrap: pretty;
   display: flex;
   gap: var(--size-3);
   margin-bottom: var(--size-fluid-1);
+
+  > h1 {
+    font-size: var(--font-size-7);
+  }
+
+  > img {
+    height: var(--font-size-14);
+  }
 }
 
 .prompt-form {
@@ -45,6 +54,7 @@
   font-size: var(--font-size-3);
   resize: none;
   height: 20vh;
+  min-height: 5em;
   width: 100%;
   caret-color: auto;
   outline: none;
@@ -63,7 +73,7 @@
   backdrop-filter: blur(20px) brightness(650%);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-6);
-
+  margin-bottom: var(--size-fluid-1);
   p {
     color: var(--firebase-gray-10);
     font-size: var(--font-size-4);
@@ -98,11 +108,11 @@ li {
   font-size: var(--font-size-5);
   text-shadow: none;
   box-shadow: var(--shadow-1);
-width: 100%;
-margin-top: var(--size-fluid-1);
+  width: 100%;
+  margin-top: var(--size-fluid-1);
 
-transition: transform 400ms ease-out, border-color 400ms ease-out;
-will-change: transform;
+  transition: transform 400ms ease-out, border-color 400ms ease-out;
+  will-change: transform;
   &:hover {
     box-shadow: var(--shadow-6);
     border-color: var(--firebase-yellow);
