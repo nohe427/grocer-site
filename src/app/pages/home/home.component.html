@@ -5,8 +5,8 @@
     <h1>Grocery store agent</h1>
   </div>
 <form class="prompt-form">
-  <textarea #recipePrompt class="prompt" id="recipe-description" type="textarea" formControlName="prompt"></textarea>
-  <input #recipeImage class="image-picker" id="image-picker" type="file" accept="image/*">
+  <textarea #recipePrompt [disabled]="status === 'loading'" class="prompt" id="recipe-description" type="textarea" formControlName="prompt"></textarea>
+  <input #recipeImage [disabled]="status === 'loading'" class="image-picker" id="image-picker" type="file" accept="image/*">
   <button #submitButton [disabled]="status === 'loading'" [ngClass]="status === 'loading' ? 'btn-submit btn-loading' : 'btn-submit'" (click)="submitPrompt($event, recipeImage, recipePrompt)">{{buttonPrompt}}</button>  
 </form>
 </div>
