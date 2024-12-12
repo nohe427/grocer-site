@@ -1,10 +1,15 @@
 <div class="recipe-sheet">
-  <h1 class="recipe-sheet-header">Grocery store agent</h1>
+  <div class="inputs">
+  <div class="recipe-sheet-header">
+    <img src="assets/Product_Logomark_Genkit_Full_Color.svg">
+    <h1>Grocery store agent</h1>
+  </div>
 <form class="prompt-form">
   <textarea #recipePrompt class="prompt" id="recipe-description" type="textarea" formControlName="prompt"></textarea>
   <input #recipeImage class="image-picker" id="image-picker" type="file" accept="image/*">
   <button #submitButton [disabled]="status === 'loading'" [ngClass]="status === 'loading' ? 'btn-submit btn-loading' : 'btn-submit'" (click)="submitPrompt($event, recipeImage, recipePrompt)">{{buttonPrompt}}</button>  
 </form>
+</div>
   <div class="result-area">
   @if (status === "loading") {
     <div class="loading-skeleton">
@@ -25,6 +30,7 @@
   } @else {
     <p>🍳 Submit a prompt to get started!</p>
   }
+
 </div>
 <!-- <app-image-input></app-image-input> -->
 <!-- <section class="features">

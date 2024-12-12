@@ -20,7 +20,16 @@
 @import "https://unpkg.com/open-props/gradients.min.css";
 /* see PropPacks for the full list */
 
-main {
-  height: 100vh;
-  background-image: var(--gradient-23);
+:root {
+  --firebase-yellow: #FFC400;
+  --firebase-orange: #FF9100;
+  --firebase-red: #DD2C00;
+  --firebase-gray-10: #1F1F1F;
+  --firebase-gray-50: #757575;
+  --firebase-gray-95: #F2F2F2;
+}
+
+html {
+  background-attachment: fixed;
+  background-image: linear-gradient(to top left, var(--firebase-gray-10), 90%, var(--firebase-red));
 }
