@@ -58,18 +58,27 @@ export class HomeComponent {
       prompt.data.image = uploadJson.downloadLocation;
     }
 
-    const response = await fetch('https://genkit-inst-1039410413539.us-central1.run.app/customerAgent', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(prompt)
-    });
+    try {
+      const response = await fetch(
+        "https://genkit-inst-1039410413539.us-central1.run.app/customerAgent",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(prompt),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
 
-    const json = await response.json();
-    this.result = json['result'];
-    this.status = '';
-    this.buttonPrompt = `Let's cook!`;
-    console.log(response.ok, json);
-    
-    console.log(promptImage.files, promptText.value, JSON.stringify(promptImage));
+      const json = await response.json();
+      this.result = json.result;
+      this.status = "";
+      this.buttonPrompt = `Let's cook!`;
+    } catch (e) {
+      this.result = (e as Error).message;
+      this.status = "";
+      this.buttonPrompt = "Try again";
+    }
   }
 }
