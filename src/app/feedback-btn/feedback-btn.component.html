@@ -1,0 +1,10 @@
+@if(traceId != "" && spanId != "" && flowName != "" && show) {
+  <button (click)="openDialog($event)">Leave Feedback</button>
+
+  <dialog #feedbackDialog>
+    <button #thumbsUp>👍</button>
+    <button #thumbsDown>👎</button>
+    <textarea #freeFromInputBox></textarea>
+    <button>Submit</button>
+  </dialog>
+}

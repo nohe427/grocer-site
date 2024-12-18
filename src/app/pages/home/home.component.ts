@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ExternalLinkDirective } from '../../directives/external-link.directive';
+import { FeedbackBtnComponent } from '../../feedback-btn/feedback-btn.component';
 import { ArrowBoxIconComponent } from '../../components/icons/arrow-box-icon.component';
 import { GithubIconComponent } from '../../components/icons/github-icon.component';
 import { TwitterIconComponent } from '../../components/icons/twitter-icon.component';
 import { YouTubeIconComponent } from '../../components/icons/youtube-icon.component';
 import { ImageInputComponent } from '../../image-input/image-input.component';
 import { MarkdownModule } from 'ngx-markdown';
-import {NgClass} from '@angular/common';
+import { NgClass } from '@angular/common';
 const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent, YouTubeIconComponent];
+
+const CUSTOMER_AGENT_FLOW = "customerAgent";
 
 interface UlDlJs {
   uploadLocation: string,
@@ -18,7 +21,7 @@ interface UlDlJs {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgClass, MarkdownModule, RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent],
+  imports: [NgClass, MarkdownModule, RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent, FeedbackBtnComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   host: {
@@ -26,16 +29,19 @@ interface UlDlJs {
   }
 })
 export class HomeComponent {
+  readonly flow = CUSTOMER_AGENT_FLOW;
   result = "";
   status = "";
   buttonPrompt = `Let's cook!`
+  traceId = "";
+  spanId = "";
 
   async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
     event.preventDefault();
     this.status = 'loading';
     this.buttonPrompt = `Cooking...`;
-    
-    const prompt: {data: {text?:string, image?: string}} = {data: {text:"", image: ""}};
+
+    const prompt: { data: { text?: string, image?: string } } = { data: { text: "", image: "" } };
 
     if (promptText.value) {
       prompt.data.text = promptText.value.trim();
@@ -43,10 +49,10 @@ export class HomeComponent {
 
     if (promptImage.value && promptImage.files?.length === 1) {
       const fileMimeType = promptImage.files[0].type
-        // Upload to bucket
+      // Upload to bucket
       const getUploadUrl = await fetch('https://us-central1-lon-next.cloudfunctions.net/UploadImgTrip', {
         method: 'GET',
-        headers: {'mime': fileMimeType}
+        headers: { 'mime': fileMimeType }
       });
       const uploadJson: UlDlJs = await getUploadUrl.json();
       var data = new FormData()
@@ -60,7 +66,7 @@ export class HomeComponent {
 
     try {
       const response = await fetch(
-        "https://genkit-inst-1039410413539.us-central1.run.app/customerAgent",
+        `https://genkit-inst-1039410413539.us-central1.run.app/${CUSTOMER_AGENT_FLOW}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -69,6 +75,19 @@ export class HomeComponent {
       );
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
+      }
+      console.log(response.headers)
+
+      const responseSpanId = response.headers.get("x-genkit-span-id");
+      response.headers.forEach((k, v) => { console.log(k, v) })
+      if (responseSpanId) {
+        console.log(responseSpanId);
+        this.spanId = responseSpanId;
+      }
+
+      const responseTraceId = response.headers.get("x-genkit-trace-id");
+      if (responseTraceId) {
+        this.traceId = responseTraceId;
       }
 
       const json = await response.json();
