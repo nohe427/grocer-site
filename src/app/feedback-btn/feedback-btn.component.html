@@ -1,10 +1,25 @@
-@if(traceId != "" && spanId != "" && flowName != "" && show) {
-  <button (click)="openDialog($event)">Leave Feedback</button>
+<button popovertarget="feedback-popover">Leave Feedback</button>
 
-  <dialog #feedbackDialog>
-    <button #thumbsUp>👍</button>
-    <button #thumbsDown>👎</button>
-    <textarea #freeFromInputBox></textarea>
+<dialog #feedbackDialog id="feedback-popover" class="feedback-dialog" popover>
+  <div class="feedback-header">
+    <h2>Submit feedback</h2>
+  </div>
+  <div class="feedback-inputs">
+    <fieldset>
+      <legend>Was this helpful?</legend>
+      <div class="radio-option">
+        <input type="radio" id="yes-radio" name="helpful" value="yes" />
+        <label for="yes">yep 👍</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="no-radio" name="helpful" value="no" />
+        <label for="no">not really 👎</label>
+      </div>
+    </fieldset>
+    <label for="more-info">tell us why:</label>
+    <textarea #freeFromInputBox id="more-info"></textarea>
+  </div>
+  <div class="feedback-actions">
     <button>Submit</button>
-  </dialog>
-}
+  </div>
+</dialog>

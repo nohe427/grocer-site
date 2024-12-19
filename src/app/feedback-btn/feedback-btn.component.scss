@@ -1,0 +1,37 @@
+.feedback-dialog {
+  &:popover-open {
+    display: grid;
+    grid-template:
+      "head" 1fr
+      "main"
+      "footer" 1fr;
+    gap: var(--size-2);
+    padding: var(--size-4);
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(10px);
+  }
+}
+
+.feedback-header {
+  grid-area: head;
+}
+
+.feedback-inputs {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.feedback-actions {
+  display: flex;
+  justify-content: right;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: var(--size-1);
+}

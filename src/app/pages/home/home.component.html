@@ -26,13 +26,11 @@
     </div>
   }@else if(result != "") {
     <markdown class="genkit-response">{{result}}</markdown>
+    <app-feedback-btn [flowName]="flow" [traceId]="traceId" [spanId]="spanId"></app-feedback-btn> 
   } @else {
     <p>🍳 Submit a prompt to get started!</p>
   }
 </div>
-@if(result != "") {
-  <app-feedback-btn [flowName]="flow" [traceId]="traceId" [spanId]="spanId"></app-feedback-btn> 
-}
 <!-- <app-image-input></app-image-input> -->
 <!-- <section class="features">
   <article class="card">

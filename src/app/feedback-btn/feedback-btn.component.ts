@@ -14,17 +14,10 @@ export class FeedbackBtnComponent {
   @Input() spanId: string = "";
   @Input() flowName: string = "";
 
-  show = false;
+  show = true;
 
-  openDialog(e: Event) {
-    e.preventDefault();
-    console.log("test")
-    const feedbackDialogEl = this.feedbackDialog?.nativeElement;
-    console.log(this.feedbackDialog);
-    if (feedbackDialogEl) {
-      console.log(feedbackDialogEl.open)
-      feedbackDialogEl.show();
-    }
-
-  }
+  // // Uncomment this to open the popover by default to work on styling
+  // ngAfterViewInit() {
+  //   this.feedbackDialog?.nativeElement.showPopover();
+  // }
 }
