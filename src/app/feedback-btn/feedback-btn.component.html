@@ -8,18 +8,18 @@
     <fieldset>
       <legend>Was this helpful?</legend>
       <div class="radio-option">
-        <input type="radio" id="yes-radio" name="helpful" value="yes" />
+        <input #yesRadio type="radio" id="yes-radio" name="helpful" value="yes" required />
         <label for="yes">yep 👍</label>
       </div>
       <div class="radio-option">
-        <input type="radio" id="no-radio" name="helpful" value="no" />
+        <input #noRadio type="radio" id="no-radio" name="helpful" value="no" required />
         <label for="no">not really 👎</label>
       </div>
     </fieldset>
-    <label for="more-info">tell us why:</label>
+    <label for="more-info">Tell us why:</label>
     <textarea #freeFromInputBox id="more-info"></textarea>
   </div>
   <div class="feedback-actions">
-    <button>Submit</button>
+    <button #submitButton (click)="submitFeedback($event)">Submit</button>
   </div>
 </dialog>
