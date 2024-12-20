@@ -22,6 +22,11 @@ export class FeedbackBtnComponent {
   submitFeedback(event: Event) {
     event.preventDefault();
 
+    if(!this.yesRadio?.nativeElement.checked && !this.noRadio?.nativeElement.checked) {
+      console.error('gotta check something');
+      return;
+    }
+
     const feedbackResponse = { data: {
       traceId: this.traceId,
       spanId: this.spanId,
@@ -36,7 +41,6 @@ export class FeedbackBtnComponent {
     }}
 
     // TODO(nohe): send this somewhere...
-    console.log(feedbackResponse);
     fetch('https://genkit-inst-1039410413539.us-central1.run.app/feedback',
       {
         method: "POST",
@@ -44,7 +48,6 @@ export class FeedbackBtnComponent {
         body: JSON.stringify(feedbackResponse),
       }
   )
-  // TODO(@nohe427): BUG:This isn't dismissing the dialog
-    this.feedbackDialog?.nativeElement.close();
+    this.feedbackDialog?.nativeElement.hidePopover();
   }
 }
