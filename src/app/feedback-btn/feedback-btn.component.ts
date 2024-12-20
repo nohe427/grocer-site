@@ -44,6 +44,7 @@ export class FeedbackBtnComponent {
         body: JSON.stringify(feedbackResponse),
       }
   )
+  // TODO(@nohe427): BUG:This isn't dismissing the dialog
     this.feedbackDialog?.nativeElement.close();
   }
 }
