@@ -22,15 +22,28 @@ export class FeedbackBtnComponent {
   submitFeedback(event: Event) {
     event.preventDefault();
 
-    const feedbackResponse = {
+    const feedbackResponse = { data: {
       traceId: this.traceId,
       spanId: this.spanId,
-      flowName: this.flowName,
-      helpful: this.yesRadio?.nativeElement.checked || false,
-      freeInput: this.freeFromInputBox?.nativeElement.value || ""
-    }
+      name: this.flowName,
+      feedback: {
+        value: this.yesRadio?.nativeElement.checked ? "positive" : "negative",
+        text: this.freeFromInputBox?.nativeElement.value || ""
+      },
+      acceptance: {
+        value: "accepted",
+      },
+    }}
 
     // TODO(nohe): send this somewhere...
     console.log(feedbackResponse);
+    fetch('https://genkit-inst-1039410413539.us-central1.run.app/feedback',
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(feedbackResponse),
+      }
+  )
+    this.feedbackDialog?.nativeElement.close();
   }
 }
