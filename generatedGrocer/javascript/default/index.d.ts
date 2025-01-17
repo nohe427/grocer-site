@@ -41,20 +41,20 @@ export interface StoreItem_Key {
 
 
 /* Allow users to create refs without passing in DataConnect */
-export function listStoreItemsRef(vars: ListStoreItemsVariables): QueryRef<ListStoreItemsResponse, ListStoreItemsVariables>;
-/* Allow users to pass in custom DataConnect instances */
-export function listStoreItemsRef(dc: DataConnect, vars: ListStoreItemsVariables): QueryRef<ListStoreItemsResponse,ListStoreItemsVariables>;
-
-export function listStoreItems(vars: ListStoreItemsVariables): QueryPromise<ListStoreItemsResponse, ListStoreItemsVariables>;
-export function listStoreItems(dc: DataConnect, vars: ListStoreItemsVariables): QueryPromise<ListStoreItemsResponse,ListStoreItemsVariables>;
-
-
-/* Allow users to create refs without passing in DataConnect */
 export function changeAisleRef(vars: ChangeAisleVariables): MutationRef<ChangeAisleResponse, ChangeAisleVariables>;
 /* Allow users to pass in custom DataConnect instances */
 export function changeAisleRef(dc: DataConnect, vars: ChangeAisleVariables): MutationRef<ChangeAisleResponse,ChangeAisleVariables>;
 
 export function changeAisle(vars: ChangeAisleVariables): MutationPromise<ChangeAisleResponse, ChangeAisleVariables>;
 export function changeAisle(dc: DataConnect, vars: ChangeAisleVariables): MutationPromise<ChangeAisleResponse,ChangeAisleVariables>;
+
+
+/* Allow users to create refs without passing in DataConnect */
+export function listStoreItemsRef(vars: ListStoreItemsVariables): QueryRef<ListStoreItemsResponse, ListStoreItemsVariables>;
+/* Allow users to pass in custom DataConnect instances */
+export function listStoreItemsRef(dc: DataConnect, vars: ListStoreItemsVariables): QueryRef<ListStoreItemsResponse,ListStoreItemsVariables>;
+
+export function listStoreItems(vars: ListStoreItemsVariables): QueryPromise<ListStoreItemsResponse, ListStoreItemsVariables>;
+export function listStoreItems(dc: DataConnect, vars: ListStoreItemsVariables): QueryPromise<ListStoreItemsResponse,ListStoreItemsVariables>;
 
 

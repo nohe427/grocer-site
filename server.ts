@@ -25,7 +25,8 @@ export function app(): express.Express {
   //   console.log(req.body);
   //   res.send('hi mom');
   // });
-  server.post('/api/grocerAgent', async (req, res) => {
+  server.post('/api/customerAgent', async (req, res) => {
+    console.log("HIT")
     console.log(req.body);
     const query = req.body.text;
     if(!query || query == "") {
