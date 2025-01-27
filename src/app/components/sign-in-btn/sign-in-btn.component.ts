@@ -9,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class SignInBtnComponent {
 
+signIn() {
+    console.log('sign in button clicked!');
+}
+
 }
