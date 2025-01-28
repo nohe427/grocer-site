@@ -13,7 +13,8 @@ export class CustomerAgentService {
 
     try {
       const response = await fetch(
-        environment.genkitUrl,
+        '/api/customerAgent',
+        // environment.genkitUrl,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -40,7 +40,7 @@ export class FeedbackBtnComponent {
     }}
 
     // TODO(nohe): send this somewhere...
-    fetch('https://genkit-inst-1039410413539.us-central1.run.app/feedback',
+    fetch('/api/feedback',
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

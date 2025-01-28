@@ -1,5 +1,8 @@
 import {genkit} from 'genkit';
 import { vertexAI, gemini15Pro } from '@genkit-ai/vertexai';
+import { enableFirebaseTelemetry } from '@genkit-ai/firebase';
+
+enableFirebaseTelemetry({});
 
 export const ai = genkit({
     plugins: [

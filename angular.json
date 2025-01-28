@@ -48,7 +48,8 @@
             },
             "ssr": {
               "entry": "server.ts"
-            }
+            },
+            "externalDependencies": ["@genkit-ai/firebase"]
           },
           "configurations": {
             "production": {

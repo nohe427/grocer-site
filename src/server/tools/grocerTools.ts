@@ -1,8 +1,9 @@
 import { listStoreItems } from "@grocer/dc";
 import { getDataconnectClient } from "../config/dataconnect";
 import { ai } from '../config/ai';
-import { gemini15Flash, gemini15Pro } from "@genkit-ai/vertexai";
+import { gemini20FlashExp, imagen3Fast } from "@genkit-ai/vertexai";
 import { z } from 'genkit';
+import { generateRecipeStepImg } from './imageGen';
 
 const dc = getDataconnectClient();
 
@@ -12,13 +13,15 @@ export const generateRecipie = ai.defineTool({
     // Define input and output schema so the model knows how to use the tool
     inputSchema: z.object({recipieRequest: z.string().optional()}),
     outputSchema: z.object({
-        recipie: z.string().describe('The step by step recipie to make'),
+        recipie: z.string().describe('The step by step recipie to make').array(),
         ingredients: z.object({ingredient: z.string().describe("the name of the ingredient"), quantity: z.string()}).array(),
+        images: z.string().describe('The images that accompany the step by step recipie instructions').array().optional(),
     }).optional().describe('a recipie for a meal item'),
 },
     async (input) => {
+        const images = [];
         const result = await ai.generate({
-            model: gemini15Flash,
+            model: gemini20FlashExp,
             prompt: `
     Generate a recipie that most people could make at home with ingredients they would find in a local grocery store.
     The recipie must try to match the users request.
@@ -28,17 +31,38 @@ export const generateRecipie = ai.defineTool({
             output: {
               format: "json",
               schema: z.object({
-                recipie: z.string().describe('The step by step recipie to make'),
+                recipie: z.string().describe('The step by step recipie to make').array(),
                 ingredients: z.object({ingredient: z.string().describe("the name of the ingredient"), quantity: z.string()}).array(),
             }).describe('a recipie for a meal item'),
             },
           });
 
-          if (result.output == null) {
-            return {recipie: "", ingredients: []}
+          const output = result.output;
+          if (output == null) {
+            return {recipie: [], ingredients: []}
+          }
+          
+          console.log(output.recipie.length);
+          if (output.recipie.length > 0) {
+            const promises = [];
+            for(let i = 0; i < output.recipie.length; i++) {
+                promises.push(
+                    generateRecipeStepImg(
+                        {
+                            currentStep: output.recipie[i],
+                            previousSteps: output.recipie.slice(0, i)
+                        }
+                    )
+                );
+            }
+            images.push(...(await Promise.all(promises)));
+
           }
         
-          return {recipie: result.output!.recipie, ingredients: result.output!.ingredients};
+          return {
+            recipie: output.recipie,
+            ingredients: output.ingredients,
+            images: images};
     }
 );
 
@@ -68,7 +92,7 @@ export const ingredientReplacement = ai.defineTool({
 },
     async (input) => {
         const result = await ai.generate({
-            model: gemini15Pro,
+            model: gemini20FlashExp,
             prompt: `
     Fetch a list of possible alternatives for ${input.outOfStockIngredient}
     `,

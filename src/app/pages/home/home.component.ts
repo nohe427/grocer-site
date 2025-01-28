@@ -55,7 +55,9 @@ export class HomeComponent {
 
     const result = this.customerAgentService.askAgent(prompt.data.text, prompt.data.image);
 
-    this.result = (await result).result
+    this.result = (await result).result;
+    this.traceId = (await result).traceId;
+    this.spanId = (await result).spanId;
     this.status = "";
     this.buttonPrompt = `Let's cook!`;
   }

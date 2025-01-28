@@ -4,8 +4,10 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
-import { customerAgent, helloWorld } from './src/server/main';
+import {  } from './src/server/main';
+import { customerAgent, feedback } from './src/server/genkitFlows/flows';
 import bodyParser from 'body-parser';
+import { ai } from './src/server/config/ai';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -26,25 +28,20 @@ export function app(): express.Express {
   //   res.send('hi mom');
   // });
   server.post('/api/customerAgent', async (req, res) => {
-    console.log("HIT")
     console.log(req.body);
-    const query = req.body.text;
-    if(!query || query == "") {
-      res.status(500).send('missing query parameter');
-    }
-    const text = await customerAgent(query)
-    res.send(text);
+    const result = await customerAgent.run({text: req.body.data.text, image: req.body.data.image});
+    res
+      .status(200)
+      .setHeader('x-genkit-trace-id', result.telemetry.traceId)
+      .setHeader('x-genkit-span-id', result.telemetry.spanId)
+      .send(JSON.stringify({"result": result.result}));
   });
-  server.post('/api/helloWorld', async (req, res) => {
-      console.log(req.body);
-      const query = req.body.text;
-      if(!query || query == "") {
-        res.status(500).send('missing query parameter');
-      }
-      console.log(query);
-      const text = "hi mom";
-      console.log("OUT", text);
-      res.status(200).send(text);
+
+  server.post('/api/feedback', async (req, res) => {
+      console.log('feedback');
+      const result = await feedback.run(req.body.data);
+      console.log(result);
+      res.status(200).send(JSON.stringify(result));
   })
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
