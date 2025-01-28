@@ -7,20 +7,6 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
-function listStoreItemsRef(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  if('_useGeneratedSdk' in dcInstance) {
-    dcInstance._useGeneratedSdk();
-  } else {
-    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
-  }
-  return queryRef(dcInstance, 'ListStoreItems', inputVars);
-}
-exports.listStoreItemsRef = listStoreItemsRef;
-exports.listStoreItems = function listStoreItems(dcOrVars, vars) {
-  return executeQuery(listStoreItemsRef(dcOrVars, vars));
-};
-
 function changeAisleRef(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   if('_useGeneratedSdk' in dcInstance) {
@@ -33,5 +19,19 @@ function changeAisleRef(dcOrVars, vars) {
 exports.changeAisleRef = changeAisleRef;
 exports.changeAisle = function changeAisle(dcOrVars, vars) {
   return executeMutation(changeAisleRef(dcOrVars, vars));
+};
+
+function listStoreItemsRef(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  if('_useGeneratedSdk' in dcInstance) {
+    dcInstance._useGeneratedSdk();
+  } else {
+    console.error('Please update to the latest version of the Data Connect SDK by running `npm install firebase@dataconnect-preview`.');
+  }
+  return queryRef(dcInstance, 'ListStoreItems', inputVars);
+}
+exports.listStoreItemsRef = listStoreItemsRef;
+exports.listStoreItems = function listStoreItems(dcOrVars, vars) {
+  return executeQuery(listStoreItemsRef(dcOrVars, vars));
 };
 
