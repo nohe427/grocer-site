@@ -41,6 +41,8 @@ export const customerAgent = ai.defineFlow(
         or try to find a new recipie and let the user know you needed to pivot from their original
         request due to lack of ingredients.
 
+        If someone uploads an image, determine what recipe to make by going to generateRecipie tool.
+
         Use findStoreItems to check for stock.
         Use findStoreItems to find the aisle that items are located in.
         Use findStoreItems to find where items are located. Return the aisle number, not the category.
