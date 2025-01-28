@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development';
 
 export interface UlDlJs {
   uploadLocation: string,
@@ -13,7 +14,7 @@ export class UploadImgService {
   constructor() { }
 
   async uploadImg(fileMimeType: string, file: File) {
-    const getUploadUrl = await fetch('https://us-central1-lon-next.cloudfunctions.net/UploadImgTrip', {
+    const getUploadUrl = await fetch(environment.uploadImgUrl, {
       method: 'GET',
       headers: { 'mime': fileMimeType }
     });

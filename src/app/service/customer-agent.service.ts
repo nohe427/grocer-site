@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -7,13 +8,12 @@ export class CustomerAgentService {
   constructor() { }
 
   async askAgent(text?: string, image?: string) {
-    const CUSTOMER_AGENT_FLOW = "customerAgent";
     const prompt: { data: { text?: string, image?: string } } = { data: { text: text?.trim() || "", image: image || "" } };
     const returnValue: {spanId: string, traceId: string, result: string}  = {spanId: "", traceId: "", result: ""};
 
     try {
       const response = await fetch(
-        `https://genkit-inst-1039410413539.us-central1.run.app/${CUSTOMER_AGENT_FLOW}`,
+        environment.genkitUrl,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
