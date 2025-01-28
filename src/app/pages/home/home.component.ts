@@ -18,14 +18,13 @@ const CUSTOMER_AGENT_FLOW = "customerAgent";
 
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [NgClass, MarkdownModule, RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent, FeedbackBtnComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
-  host: {
-    'class': 'content'
-  }
+    selector: 'app-home',
+    imports: [NgClass, MarkdownModule, RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent, FeedbackBtnComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
+    host: {
+        'class': 'content'
+    }
 })
 export class HomeComponent {
   readonly flow = CUSTOMER_AGENT_FLOW;

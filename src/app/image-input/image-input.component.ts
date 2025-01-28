@@ -1,11 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-image-input',
-  standalone: true,
-  imports: [],
-  templateUrl: './image-input.component.html',
-  styleUrl: './image-input.component.scss'
+    selector: 'app-image-input',
+    imports: [],
+    templateUrl: './image-input.component.html',
+    styleUrl: './image-input.component.scss'
 })
 export class ImageInputComponent {
   selectedFile = '';

@@ -1,11 +1,10 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-feedback-btn',
-  standalone: true,
-  imports: [],
-  templateUrl: './feedback-btn.component.html',
-  styleUrl: './feedback-btn.component.scss'
+    selector: 'app-feedback-btn',
+    imports: [],
+    templateUrl: './feedback-btn.component.html',
+    styleUrl: './feedback-btn.component.scss'
 })
 export class FeedbackBtnComponent {
   @ViewChild('feedbackDialog') feedbackDialog?: ElementRef<HTMLDialogElement>;
