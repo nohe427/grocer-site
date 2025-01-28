@@ -6,7 +6,10 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { WINDOW, windowProvider } from './providers/window';
 import { DOCUMENT } from '@angular/common';
 import { provideMarkdown } from 'ngx-markdown';
-
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { initializeAppCheck, ReCaptchaEnterpriseProvider, provideAppCheck } from '@angular/fire/app-check';
+import { environment } from '../environments/environment.development';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
@@ -15,6 +18,14 @@ export const appConfig: ApplicationConfig = {
       provide: WINDOW,
       useFactory: (document: Document) => windowProvider(document),
       deps: [DOCUMENT],
-    },provideMarkdown()
+    },provideMarkdown(),
+      provideFirebaseApp(() => initializeApp(
+        environment.firebase
+      )),
+      provideAuth(() => getAuth()),
+      provideAppCheck(() => {
+        const provider = environment.appCheckProvider;  
+        return initializeAppCheck(undefined, { provider, isTokenAutoRefreshEnabled: true });
+      }),
   ]
 };
