@@ -92,6 +92,24 @@
           },
           "defaultConfiguration": "development"
         },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "local": {
+              "browserTarget": "firebase-app-hosting-angular:build:local",
+              "serverTarget": "firebase-app-hosting-angular:server:local"
+            },
+            "development": {
+              "browserTarget": "firebase-app-hosting-angular:build:development",
+              "serverTarget": "firebase-app-hosting-angular:server:development"
+            },
+            "production": {
+              "browserTarget": "firebase-app-hosting-angular:build:production",
+              "serverTarget": "firebase-app-hosting-angular:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
