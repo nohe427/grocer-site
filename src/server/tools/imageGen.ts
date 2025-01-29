@@ -6,6 +6,7 @@ import axios from 'axios';
 const powerUpImgPrompt = ai.defineFlow({
   name: 'powerUpImgPrompt',
   inputSchema: z.object({
+    style: z.string().optional().describe('a style to apply to the images. Defaults to "modern clearn"'),
     currentStep: z.string(),
     previousSteps: z.string().array().optional()
     }
@@ -13,11 +14,12 @@ const powerUpImgPrompt = ai.defineFlow({
   outputSchema: z.string(),
 },
   async (request) => {
+    request.style = request.style || "modern clean";
     const output = await ai.generate({
         model: gemini15Flash,
         prompt:`
         Please generate me a prompt for an image generation system that would
-        create an image of this recipe step in a modern clean kitchen. The
+        create an image of this recipe step in a ${request.style} kitchen. The
         prompt should be extremely detailed and about two paragraphs long.
 
         PREVIOUS STEPS:
@@ -34,6 +36,7 @@ export const generateRecipeStepImg = ai.defineFlow({
     inputSchema: z.object({
         currentStep: z.string(),
         previousSteps: z.string().array().optional(),
+        style: z.string().optional(),
     }),
     outputSchema: z.string(),
     },

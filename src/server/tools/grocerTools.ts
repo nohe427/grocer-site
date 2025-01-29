@@ -7,6 +7,16 @@ import { generateRecipeStepImg } from './imageGen';
 
 const dc = getDataconnectClient();
 
+import { initializeApp } from "firebase-admin/app";
+import { getRemoteConfig } from "firebase-admin/remote-config";
+import { getRandomUUID } from '../../app/utils/metadata-generator';
+
+
+const app = initializeApp({projectId: 'lon-next'});
+const rc = getRemoteConfig(app);
+
+const template = rc.initServerTemplate();
+
 export const generateRecipie = ai.defineTool({
     name: 'generateRecipie',
     description: 'Used to generate a recipie and a list of grocery items that need to be purchased to make the item. If no input is provided, come up with an american themed dish',
@@ -41,6 +51,13 @@ export const generateRecipie = ai.defineTool({
           if (output == null) {
             return {recipie: [], ingredients: []}
           }
+
+            await template.load()
+            const config = template.evaluate({
+                randomizationId: getRandomUUID(),
+            });
+            const style = config.getString('style');
+            console.log(style);
           
           console.log(output.recipie.length);
           if (output.recipie.length > 0) {
@@ -49,6 +66,7 @@ export const generateRecipie = ai.defineTool({
                 promises.push(
                     generateRecipeStepImg(
                         {
+                            style: style,
                             currentStep: output.recipie[i],
                             previousSteps: output.recipie.slice(0, i)
                         }
