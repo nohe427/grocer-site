@@ -11,6 +11,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { CustomerAgentService } from '../../service/customer-agent.service';
 import { UploadImgService, UlDlJs } from '../../service/upload-img.service';
 import { NgClass } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent, YouTubeIconComponent];
 
 const CUSTOMER_AGENT_FLOW = "customerAgent";
@@ -34,7 +35,7 @@ export class HomeComponent {
   traceId = "";
   spanId = "";
 
-  constructor(private customerAgentService: CustomerAgentService, private uploadImgService: UploadImgService) {
+  constructor(private customerAgentService: CustomerAgentService, private uploadImgService: UploadImgService, private httpClient: HttpClient) {
   }
 
   async submitPrompt(event: Event, promptImage: HTMLInputElement, promptText: HTMLTextAreaElement) {
