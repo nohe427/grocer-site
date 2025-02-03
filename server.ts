@@ -29,12 +29,16 @@ export function app(): express.Express {
   // });
   server.post('/api/customerAgent', async (req, res) => {
     console.log(req.body);
-    const result = await customerAgent.run({text: req.body.data.text, image: req.body.data.image});
+    const result = customerAgent({text: req.body.data.text, image: req.body.data.image})
+    //const result = await customerAgent.run({text: req.body.data.text, image: req.body.data.image});
     res
       .status(200)
-      .setHeader('x-genkit-trace-id', result.telemetry.traceId)
-      .setHeader('x-genkit-span-id', result.telemetry.spanId)
-      .send(JSON.stringify({"result": result.result}));
+      .setHeader('x-genkit-trace-id', "result.telemetry.traceId")
+      .setHeader('x-genkit-span-id', "result.telemetry.spanId")
+      // .setHeader('x-genkit-trace-id', result.telemetry.traceId)
+      // .setHeader('x-genkit-span-id', result.telemetry.spanId)
+      .send(JSON.stringify({"result": result}));
+      // .send(JSON.stringify({"result": result.result}));
   });
 
   server.post('/api/feedback', async (req, res) => {
