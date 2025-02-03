@@ -4,6 +4,7 @@ import { enableFirebaseTelemetry } from '@genkit-ai/firebase';
 
 enableFirebaseTelemetry({
   projectId: 'lon-next',
+  forceDevExport: true, // Set this to true to export telemetry for local runs
 });
 
 export const ai = genkit({

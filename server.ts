@@ -29,7 +29,7 @@ export function app(): express.Express {
   // });
   server.post('/api/customerAgent', async (req, res) => {
     console.log(req.body);
-    const result = customerAgent({text: req.body.data.text, image: req.body.data.image})
+    const result = await customerAgent({text: req.body.data.text, image: req.body.data.image})
     //const result = await customerAgent.run({text: req.body.data.text, image: req.body.data.image});
     res
       .status(200)
