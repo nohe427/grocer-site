@@ -6,8 +6,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 const project = 'lon-next';
 const storage = new Storage({projectId: project});
 const bucket = 'lon-next.firebasestorage.app';
-const app = initializeApp();
-const db = getFirestore(app);
+const db = getFirestore();
 
 
 export interface UploadUrls {
