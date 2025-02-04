@@ -8,6 +8,7 @@ import {  } from './src/server/main';
 import { customerAgent, feedback } from './src/server/genkitFlows/flows';
 import bodyParser from 'body-parser';
 import { ai } from './src/server/config/ai';
+import { GenerateUploadUrls } from './src/server/main';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -42,7 +43,16 @@ export function app(): express.Express {
       const result = await feedback.run(req.body.data);
       console.log(result);
       res.status(200).send(JSON.stringify(result));
-  })
+  });
+
+  server.get('/api/storageUrls', async (req, res) => {
+    const mime = req.headers['mime'];
+    const urls = await GenerateUploadUrls(mime?.toString() || 'png');
+    res
+      .status(200)
+      .send(JSON.stringify(urls));
+  });
+
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
