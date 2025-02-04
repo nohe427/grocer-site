@@ -11,7 +11,6 @@ import { MarkdownModule } from 'ngx-markdown';
 import { CustomerAgentService } from '../../service/customer-agent.service';
 import { UploadImgService, UlDlJs } from '../../service/upload-img.service';
 import { NgClass } from '@angular/common';
-const icons = [ArrowBoxIconComponent, GithubIconComponent, TwitterIconComponent, YouTubeIconComponent];
 
 const CUSTOMER_AGENT_FLOW = "customerAgent";
 
@@ -19,7 +18,7 @@ const CUSTOMER_AGENT_FLOW = "customerAgent";
 
 @Component({
     selector: 'app-home',
-    imports: [NgClass, MarkdownModule, RouterLink, ExternalLinkDirective, ...icons, ImageInputComponent, FeedbackBtnComponent],
+    imports: [NgClass, MarkdownModule, FeedbackBtnComponent],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
     host: {

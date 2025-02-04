@@ -1,6 +1,6 @@
 import {Storage, GetSignedUrlConfig} from '@google-cloud/storage';
 import {v4} from 'uuid';
-import {initializeApp} from 'firebase-admin/app';
+import {} from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 const project = 'lon-next';
