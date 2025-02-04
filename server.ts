@@ -46,8 +46,9 @@ export function app(): express.Express {
 
   server.get('/api/storageUrls', async (req, res) => {
     const mime = req.headers['mime'];
-    const proxyHost = req.headers["x-forwarded-host"]?.toString();
-    const host = proxyHost || req.headers.host?.toString() || '';
+    // const proxyHost = req.headers["x-forwarded-host"]?.toString();
+    const host = 'example1.nohe-example.xyz';  //proxyHost || req.headers.host?.toString() || '';
+    
     const urls = await GenerateUploadUrls(mime?.toString() || 'png', host);
     res
       .status(200)
