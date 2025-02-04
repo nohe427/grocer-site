@@ -1,9 +1,13 @@
 import {Storage, GetSignedUrlConfig} from '@google-cloud/storage';
 import {v4} from 'uuid';
+import {initializeApp} from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
 const project = 'lon-next';
 const storage = new Storage({projectId: project});
 const bucket = 'lon-next.firebasestorage.app';
+const app = initializeApp();
+const db = getFirestore(app);
 
 
 export interface UploadUrls {
@@ -11,15 +15,16 @@ export interface UploadUrls {
     downloadLocation: string,
 }
 
-export const GenerateUploadUrls = async (mime: string): Promise<UploadUrls> => {
+export const GenerateUploadUrls = async (mime: string, host:string): Promise<UploadUrls> => {
     const id = v4();
     const outputName = `tripediaPhotos/${id.toString()}`;
     const mimeType = mime;
     const putUrl = await generateV4PutObjectSignedUrl(bucket, outputName, mimeType)
     const getUrl = await generateV4GetObjectSignedUrl(bucket, outputName);
+    const docId = await storeUrlAsDoc(getUrl);
     return {
         uploadLocation: putUrl,
-        downloadLocation: getUrl,
+        downloadLocation: `https://${host}/l/${docId}`,
     };
 }
 
@@ -64,5 +69,21 @@ const generateV4GetObjectSignedUrl =
                 .file(object)
                 .getSignedUrl(options);
 
+            
+
         return url;
+}
+
+export const storeUrlAsDoc = async(url: string): Promise<string> => {
+    const doc = await db.collection('urls').add({url: url});
+    return doc.id
+}
+
+export const getUrlFromDoc = async(docId: string): Promise<string> => {
+    const doc = await db.collection('urls').doc(docId).get();
+    const data = doc.data();
+    if (data == undefined) {
+        return "";
     }
+    return data['url'] || "";
+}

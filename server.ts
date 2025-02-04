@@ -4,11 +4,10 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
-import {  } from './src/server/main';
 import { customerAgent, feedback } from './src/server/genkitFlows/flows';
 import bodyParser from 'body-parser';
 import { ai } from './src/server/config/ai';
-import { GenerateUploadUrls } from './src/server/main';
+import { GenerateUploadUrls, getUrlFromDoc } from './src/server/main';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -47,10 +46,19 @@ export function app(): express.Express {
 
   server.get('/api/storageUrls', async (req, res) => {
     const mime = req.headers['mime'];
-    const urls = await GenerateUploadUrls(mime?.toString() || 'png');
+    const proxyHost = req.headers["x-forwarded-host"];
+    const host = proxyHost ? proxyHost : req.headers.host;
+    const urls = await GenerateUploadUrls(mime?.toString() || 'png', host);
     res
       .status(200)
       .send(JSON.stringify(urls));
+  });
+
+  server.get('/l/:doc', async(req, res) => {
+    const doc = req.params.doc;
+    getUrlFromDoc(doc).then((url) => {
+      res.redirect(url);
+    });
   });
 
   // Serve static files from /browser
