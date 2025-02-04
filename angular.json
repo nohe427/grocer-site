@@ -54,7 +54,8 @@
               "firebase-admin",
               "genkit",
               "@genkit-ai/vertexai",
-              "@google-cloud/storage"
+              "@google-cloud/storage",
+              "axios"
             ]
           },
           "configurations": {
