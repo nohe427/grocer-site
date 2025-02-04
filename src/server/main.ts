@@ -2,11 +2,12 @@ import {Storage, GetSignedUrlConfig} from '@google-cloud/storage';
 import {v4} from 'uuid';
 import {} from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { app } from './config/firebase';
 
 const project = 'lon-next';
 const storage = new Storage({projectId: project});
 const bucket = 'lon-next.firebasestorage.app';
-const db = getFirestore();
+const db = getFirestore(app);
 
 
 export interface UploadUrls {

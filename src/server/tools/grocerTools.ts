@@ -4,15 +4,13 @@ import { ai } from '../config/ai';
 import { gemini20FlashExp, imagen3Fast } from "@genkit-ai/vertexai";
 import { z } from 'genkit';
 import { generateRecipeStepImg } from './imageGen';
+import { app } from '../config/firebase';
 
 const dc = getDataconnectClient();
 
-import { initializeApp } from "firebase-admin/app";
 import { getRemoteConfig } from "firebase-admin/remote-config";
 import { getRandomUUID } from '../../app/utils/metadata-generator';
 
-
-const app = initializeApp({projectId: 'lon-next'});
 const rc = getRemoteConfig(app);
 
 const template = rc.initServerTemplate();
