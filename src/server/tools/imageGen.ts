@@ -67,7 +67,7 @@ const uploadImg = async (data: string, contentType?: string) => {
     if(!contentType) {
         contentType = 'image/png';
     }
-    const UpDlJs = await axios.get('https://example1/nohe-example.xyz/api/storageUrls', {
+    const UpDlJs = await axios.get('https://example1.nohe-example.xyz/api/storageUrls', {
         headers: {
             'mime': contentType,
         }
