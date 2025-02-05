@@ -46,6 +46,7 @@ export const customerAgent = ai.defineFlow(
         Use findStoreItems to check for stock.
         Use findStoreItems to find the aisle that items are located in.
         Use findStoreItems to find where items are located. Return the aisle number, not the category.
+        Use generateRecipie to generate a recipie when someone types in a generic food item without any instructions. i.e., a queyr of 'pizza' should start a generateRecipie request
 
         If you are listing ingredients in a recipie help them with the location via the aisle number of the ingredients.
 
