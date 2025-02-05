@@ -75,7 +75,10 @@ const generateV4GetObjectSignedUrl =
 }
 
 export const storeUrlAsDoc = async(url: string): Promise<string> => {
-    const doc = await db.collection('urls').add({url: url, ttl: Date.now() + 15 * 60 * 1000, // 15 minutes});
+    const doc = await db.collection('urls').add({
+        url: url,
+        ttl: Date.now() + 15 * 60 * 1000, // 15 minutes
+        });
     return doc.id
 }
 
