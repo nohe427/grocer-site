@@ -31,7 +31,7 @@ const devFirebaseConfig = {
 // TODO get a reCAPTCHA Enterprise here https://console.cloud.google.com/security/recaptcha?project=_
 const appCheck = new ReCaptchaEnterpriseProvider("6LcnyboqAAAAAF5RKuAPmld7DSmllAbsk-LNorji");
 
-const uploadImgUrl = "https://us-central1-lon-next.cloudfunctions.net/UploadImgTrip";
+const uploadImgUrl = '/api/storageUrls'; // "https://us-central1-lon-next.cloudfunctions.net/UploadImgTrip";
 const genkitUrl = 'https://genkit-inst-1039410413539.us-central1.run.app/customerAgent'
 
 export const environment: { 
