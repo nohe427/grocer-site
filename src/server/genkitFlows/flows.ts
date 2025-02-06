@@ -6,7 +6,7 @@ import { collectUserEngagement, FirebaseUserEngagementSchema } from '@genkit-ai/
 // Import models from the Vertex AI plugin. The Vertex AI API provides access to
 // several generative models. Here, we import Gemini 1.5 Flash.
 import { findStoreItems, generateRecipie, ingredientReplacement } from '../tools/grocerTools'
-import { gemini20FlashExp } from '@genkit-ai/vertexai';
+import { gemini20ProExp0205 } from '@genkit-ai/vertexai';
 
 export const customerAgent = ai.defineFlow(
   {
@@ -70,7 +70,7 @@ export const customerAgent = ai.defineFlow(
         ## Step-by-step instructions
         `,
         prompt: promptInput,
-        model: 'gemini-2.0-pro-exp-02-05',
+        model: gemini20ProExp0205,
         config: {
           temperature: 1,
         },

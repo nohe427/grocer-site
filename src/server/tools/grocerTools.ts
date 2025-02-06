@@ -1,7 +1,7 @@
 import { listStoreItems } from "@grocer/dc";
 import { getDataconnectClient } from "../config/dataconnect";
 import { ai } from '../config/ai';
-import { gemini20FlashExp, imagen3Fast } from "@genkit-ai/vertexai";
+import { gemini20Flash001, imagen3Fast } from "@genkit-ai/vertexai";
 import { z } from 'genkit';
 import { generateRecipeStepImg } from './imageGen';
 import { app } from '../config/firebase';
@@ -29,7 +29,7 @@ export const generateRecipie = ai.defineTool({
     async (input) => {
         const images = [];
         const result = await ai.generate({
-            model: gemini20FlashExp,
+            model: gemini20Flash001,
             prompt: `
     Generate a recipie that most people could make at home with ingredients they would find in a local grocery store.
     The recipie must try to match the users request.
@@ -108,7 +108,7 @@ export const ingredientReplacement = ai.defineTool({
 },
     async (input) => {
         const result = await ai.generate({
-            model: gemini20FlashExp,
+            model: gemini20Flash001,
             prompt: `
     Fetch a list of possible alternatives for ${input.outOfStockIngredient}
     `,
