@@ -70,7 +70,7 @@ export const customerAgent = ai.defineFlow(
         ## Step-by-step instructions
         `,
         prompt: promptInput,
-        model: gemini20FlashExp,
+        model: 'gemini-2.0-pro-exp-02-05',
         config: {
           temperature: 1,
         },
