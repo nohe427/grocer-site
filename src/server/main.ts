@@ -1,7 +1,7 @@
 import {Storage, GetSignedUrlConfig} from '@google-cloud/storage';
 import {v4} from 'uuid';
 import {} from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { app } from './config/firebase';
 
 const project = 'lon-next';
@@ -77,7 +77,7 @@ const generateV4GetObjectSignedUrl =
 export const storeUrlAsDoc = async(url: string): Promise<string> => {
     const doc = await db.collection('urls').add({
         url: url,
-        ttl: Date.now() + 15 * 60 * 1000, // 15 minutes
+        ttl: Timestamp.fromMillis( Date.now() + 15 * 60 * 1000 ), // 15 minutes
         });
     return doc.id
 }
