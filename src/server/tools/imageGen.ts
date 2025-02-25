@@ -2,7 +2,7 @@ import { z } from 'genkit';
 import {ai} from '../config/ai';
 import { gemini15Flash, imagen3 } from '@genkit-ai/vertexai';
 import axios from 'axios';
-import { GenerateUploadUrls } from '../main';
+import { GenerateUploadUrls } from '../utils/images';
 
 const powerUpImgPrompt = ai.defineFlow({
   name: 'powerUpImgPrompt',
@@ -69,13 +69,8 @@ const uploadImg = async (data: string, contentType?: string) => {
         contentType = 'image/png';
     }
     const UpDlJs = await GenerateUploadUrls(contentType, 'example1.nohe-example.xyz');
-    //  await axios.get('https://example1.nohe-example.xyz/api/storageUrls', {
-    //     headers: {
-    //         'mime': contentType,
-    //     }
-    // });
-    const uploadLocation = UpDlJs.uploadLocation; //UpDlJs.data['uploadLocation']
-    const downloadLocation = UpDlJs.downloadLocation; // UpDlJs.data['downloadLocation']
+    const uploadLocation = UpDlJs.uploadLocation;
+    const downloadLocation = UpDlJs.downloadLocation;
 
     const response = await axios.put(
         uploadLocation,
