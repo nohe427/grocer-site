@@ -7,7 +7,8 @@ import bootstrap from './src/main.server';
 import { customerAgent, feedback } from './src/server/genkitFlows/flows';
 import bodyParser from 'body-parser';
 import { ai } from './src/server/config/ai';
-import { GenerateUploadUrls, getUrlFromDoc } from './src/server/main';
+import { GenerateUploadUrls } from './src/server/utils/images';
+import { getUrlFromDoc } from './src/server/utils/shortner';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -22,11 +23,8 @@ export function app(): express.Express {
   server.set('views', browserDistFolder);
 
   // Example Express Rest API endpoints
-  server.use(bodyParser.json())
-  // server.post('/api/**', async (req, res) => {
-  //   console.log(req.body);
-  //   res.send('hi mom');
-  // });
+  server.use(bodyParser.json());
+
   server.post('/api/customerAgent', async (req, res) => {
     console.log(req.body);
     const result = await customerAgent.run({text: req.body.data.text, image: req.body.data.image});
