@@ -1,36 +1,38 @@
 import { z } from 'genkit';
-import {ai} from '../config/ai';
+import { ai } from '../config/ai';
 import { gemini15Flash, imagen3 } from '@genkit-ai/vertexai';
 import axios from 'axios';
 import { GenerateUploadUrls } from '../utils/images';
+import { retryGenerate } from '../utils/generation';
 
 const powerUpImgPrompt = ai.defineFlow({
-  name: 'powerUpImgPrompt',
-  inputSchema: z.object({
-    style: z.string().optional().describe('a style to apply to the images. Defaults to "modern clearn"'),
-    currentStep: z.string(),
-    previousSteps: z.string().array().optional()
+    name: 'powerUpImgPrompt',
+    inputSchema: z.object({
+        style: z.string().optional().describe('a style to apply to the images. Defaults to "modern clearn"'),
+        currentStep: z.string(),
+        previousSteps: z.string().array().optional()
     }
-  ),
-  outputSchema: z.string(),
+    ),
+    outputSchema: z.string(),
 },
-  async (request) => {
-    request.style = request.style || "modern clean";
-    const output = await ai.generate({
-        model: gemini15Flash,
-        prompt:`
+    async (request) => {
+        request.style = request.style || "modern clean";
+        // const output = await ai.generate({
+        const output = await retryGenerate({
+            model: gemini15Flash,
+            prompt: `
         Please generate me a prompt for an image generation system that would
         create an image of this recipe step in a ${request.style} kitchen. The
         prompt should be extremely detailed and about two paragraphs long.
 
         PREVIOUS STEPS:
         ${request.previousSteps ?
-            request.previousSteps.join("\n") : "No previous steps"}
+                    request.previousSteps.join("\n") : "No previous steps"}
         CURRENT STEP: ${request.currentStep}
         
     `})
-    return output.text;
-});
+        return output.text;
+    });
 
 export const generateRecipeStepImg = ai.defineFlow({
     name: 'generateRecipeStepImg',
@@ -40,21 +42,22 @@ export const generateRecipeStepImg = ai.defineFlow({
         style: z.string().optional(),
     }),
     outputSchema: z.string(),
-    },
+},
     async (request) => {
         const prompt = await powerUpImgPrompt(request);
         let img: any;
         try {
-             img = await ai.generate({
+            // img = await ai.generate({
+            img = await retryGenerate({
                 prompt: prompt,
                 model: imagen3,
             });
-        } catch(ex) {
+        } catch (ex) {
             console.log(ex);
             return "";
         }
-        const media: {url: string, contentType?: string} = img.media
-        if(!media) {
+        const media: { url: string, contentType?: string } = img.media
+        if (!media) {
             return "";
         }
         const outUrl = await uploadImg(media.url, media.contentType);
@@ -65,7 +68,7 @@ export const generateRecipeStepImg = ai.defineFlow({
 );
 
 const uploadImg = async (data: string, contentType?: string) => {
-    if(!contentType) {
+    if (!contentType) {
         contentType = 'image/png';
     }
     const UpDlJs = await GenerateUploadUrls(contentType, 'example1.nohe-example.xyz');
@@ -77,11 +80,12 @@ const uploadImg = async (data: string, contentType?: string) => {
         Buffer.from(
             data.replace(/^data:image\/png;base64,/, ""),
             'base64'
-        ), {headers: {
+        ), {
+        headers: {
             'Content-Type': contentType,
         }
     });
-    if(response.status=200) {
+    if (response.status = 200) {
         return downloadLocation;
     }
     return "";

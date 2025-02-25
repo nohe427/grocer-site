@@ -25,13 +25,15 @@ export const customerAgent = ai.defineFlow(
       request.text = "Generate a recipe of the image"
     }
     const promptInput = [];
-    if(request.text) {
-        promptInput.push({text: request.text});
+    if (request.text) {
+      promptInput.push({ text: request.text });
     }
-    if(request.image) {
-        promptInput.push({media: {url: request.image}});
+    if (request.image) {
+      promptInput.push({ media: { url: request.image } });
     }
-    const response = await ai.generate({
+    let responseText = "";
+    try {
+      const response = await ai.generate({
         system: `
         You are a helpful customer service representative for a grocery store.
         You can help folks come up with recipies for dinner, help build a shopping list,
@@ -78,8 +80,12 @@ export const customerAgent = ai.defineFlow(
           temperature: 1,
         },
         tools: [generateRecipie, findStoreItems, ingredientReplacement]
-    })
-    return response.text;
+      });
+      responseText = response.text;
+    } catch (error) {
+      return "failed to produce a response";
+    }
+    return responseText;
   }
 )
 
