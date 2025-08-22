@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --no-watch --browsers=ChromeHeadless",
     "serve:ssr:firebase-app-hosting-angular": "LOCAL=true node dist/firebase-app-hosting-angular/server/server.mjs",
     "dev:ssr": "ng run firebase-app-hosting-angular:serve-ssr:development"
   },
