@@ -1,5 +1,5 @@
 import {genkit} from 'genkit';
-import { vertexAI } from '@genkit-ai/vertexai';
+import { vertexAI, gemini15Pro } from '@genkit-ai/vertexai';
 import { enableFirebaseTelemetry } from '@genkit-ai/firebase';
 
 enableFirebaseTelemetry({
@@ -19,5 +19,5 @@ export const ai = genkit({
     // logLevel: 'debug', -- Where is this? TODO:@nohe
     // Perform OpenTelemetry instrumentation and enable trace collection.
     // enableTracingAndMetrics: true, Where is this?? TODO: @nohe
-    model: vertexAI.model('gemini-2.5-pro'),
+    model: gemini15Pro,
   });
